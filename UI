@@ -1,0 +1,47 @@
+using System;
+using System.Drawing;
+
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine("Steganography Tool");
+        Console.WriteLine("1. Encode Text");
+        Console.WriteLine("2. Decode Text");
+        Console.Write("Choose an option (1 or 2): ");
+        string choice = Console.ReadLine();
+
+        if (choice == "1")
+        {
+            Console.Write("Enter the path of the input image: ");
+            string imagePath = Console.ReadLine();
+
+            Console.Write("Enter the message to hide: ");
+            string message = Console.ReadLine();
+
+            Console.Write("Enter the path to save the encoded image: ");
+            string outputPath = Console.ReadLine();
+
+            Bitmap bmp = new Bitmap(imagePath);
+            Bitmap encoded = SteganographyHelper.EncodeText(message, bmp);
+            encoded.Save(outputPath);
+
+            Console.WriteLine("Message encoded successfully.");
+        }
+        else if (choice == "2")
+        {
+            Console.Write("Enter the path of the encoded image: ");
+            string imagePath = Console.ReadLine();
+
+            Bitmap bmp = new Bitmap(imagePath);
+            string message = SteganographyHelper.DecodeText(bmp);
+
+            Console.WriteLine("Decoded message:");
+            Console.WriteLine(message);
+        }
+        else
+        {
+            Console.WriteLine("Invalid choice.");
+        }
+    }
+}
